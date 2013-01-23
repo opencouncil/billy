@@ -84,7 +84,7 @@ def agenda(request, abbr, agenda_id):
         "text": agenda['description'].encode('utf-8'),
         "dates": "%s/%s" % (start_date, end_date),
         "details": "",
-        "location": agenda['location'].encode('utf-8'),
+        #"location": agenda['location'].encode('utf-8'),
         "trp": "false",
         "sprop": "http://%s/" % Site.objects.all()[0].domain,
         "sprop": "name:billy"

@@ -173,6 +173,9 @@ def _do_imports(abbrev, args):
     if 'events' in args.types or 'speeches' in args.types:
         report['events'] = import_events(abbrev, settings.BILLY_DATA_DIR)
 
+    if 'agendas' in args.types:
+        report['agendas'] = import_agendas(abbrev, settings.BILLY_DATA_DIR)
+
     if 'speeches' in args.types:
         report['speeches'] = import_speeches(abbrev, settings.BILLY_DATA_DIR)
 

@@ -21,6 +21,7 @@ BILLY_MANUAL_DATA_DIR = os.path.join(os.getcwd(), 'manual_data')
 BILL_FILTERS = {}
 LEGISLATOR_FILTERS = {}
 EVENT_FILTERS = {}
+AGENDA_FILTERS={}
 
 BILLY_SUBJECTS = [
     'Agriculture and Food',

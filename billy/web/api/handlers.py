@@ -309,7 +309,7 @@ class AgendasHandler(BillyHandler):
             return db.agendas.find_one({'_id': id})
 
         spec = {}
-        return list(db.events.find(spec, fields=_build_field_list(request)
+        return list(db.agendas.find(spec, fields=_build_field_list(request)
                                   ).sort('when', pymongo.ASCENDING).limit(1000)
                    )
 

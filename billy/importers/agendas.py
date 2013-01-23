@@ -16,7 +16,7 @@ from billy.importers.utils import (prepare_obj, update, next_big_id,
 import pymongo
 
 logger = logging.getLogger('billy')
-filters = settings.EVENT_FILTERS
+filters = settings.AGENDA_FILTERS
 
 
 def ensure_indexes():
@@ -61,46 +61,50 @@ def import_agendas(abbr, data_dir, import_actions=False):
                                      chamber,
                                      leg['participant'])
 
-        resolvers = {
-            "committee": _resolve_ctty,
-            "legislator": _resolve_leg
-        }
+        #resolvers = {
+        #    "committee": _resolve_ctty,
+        #    "legislator": _resolve_leg
+        #}
 
-        for entity in data['participants']:
-            type = entity['participant_type']
-            id = None
-            if type in resolvers:
-                id = resolvers[type](entity)
-            else:
-                logger.warning("I don't know how to resolve a %s" % type)
-            entity['id'] = id
+        """
+        if 'participants' in data:
+            for entity in data['participants']:
+                type = entity['participant_type']
+                id = None
+                if type in resolvers:
+                    id = resolvers[type](entity)
+                else:
+                    logger.warning("I don't know how to resolve a %s" % type)
+                entity['id'] = id
 
-        for bill in data['related_bills']:
-            bill_id = bill['bill_id']
-            bill_id = fix_bill_id(bill_id)
-            db_bill = db.bills.find_one({
-                "$or": [
-                    {
-                        settings.LEVEL_FIELD: abbr,
-                        'session': data['session'],
-                        'bill_id': bill_id
-                    },
-                    {
-                        settings.LEVEL_FIELD: abbr,
-                        'session': data['session'],
-                        'alternate_bill_ids': bill_id
-                    }
-                ]
-            })
+        if 'related_bills' in data:
+            for bill in data['related_bills']:
+                bill_id = bill['bill_id']
+                bill_id = fix_bill_id(bill_id)
+                db_bill = db.bills.find_one({
+                    "$or": [
+                        {
+                            settings.LEVEL_FIELD: abbr,
+                            'session': data['session'],
+                            'bill_id': bill_id
+                        },
+                        {
+                            settings.LEVEL_FIELD: abbr,
+                            'session': data['session'],
+                            'alternate_bill_ids': bill_id
+                        }
+                    ]
+                })
 
-            if not db_bill:
-                logger.warning("Error: Can't find %s" % bill_id)
-                db_bill = {}
-                db_bill['_id'] = None
+                if not db_bill:
+                    logger.warning("Error: Can't find %s" % bill_id)
+                    db_bill = {}
+                    db_bill['_id'] = None
 
-            bill['id'] = db_bill['_id']
+                bill['id'] = db_bill['_id']
+        """
         import_agenda(data)
-    ensure_indexes()
+        ensure_indexes()
 
 
 def normalize_dates(agenda):
@@ -130,7 +134,7 @@ def import_agenda(data):
 
     if not agenda:
         agenda = db.agendas.find_one({settings.LEVEL_FIELD:
-                                    data[settings.LEVEL_FIELD],
+                                    'ca',
                                     'when': data['when'],
                                     'end': data['end'],
                                     'type': data['type'],

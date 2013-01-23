@@ -903,6 +903,31 @@ def quality_exception_commit(request, abbr):
 
 
 @login_required
+def agendas(request, abbr):
+    meta = metadata(abbr)
+
+    agendas = db.agendas.find({settings.LEVEL_FIELD: abbr.lower()},
+                            sort=[('when', pymongo.DESCENDING)]).limit(20)
+
+    # sort and get rid of old agendas
+
+    return render(request, 'billy/agendas.html', {
+        'agendas': ((e, e['_id']) for e in agendas),
+        'metadata': meta,
+    })
+
+
+@login_required
+def agenda(request, abbr, agenda_id):
+    meta = metadata(abbr)
+    agenda = db.agendas.find_one(agenda_id)
+    return render(request, 'billy/agendas.html', {
+        'agenda': agenda,
+        'metadata': meta,
+    })
+
+
+@login_required
 def events(request, abbr):
     meta = metadata(abbr)
 

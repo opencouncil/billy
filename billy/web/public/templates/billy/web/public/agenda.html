@@ -19,7 +19,7 @@
     <dt>{% trans "Where" %}:</dt>
     <dd>{{ agenda.location }}</dd>
     <dt>{% trans "Transcript" %}:</dt>
-    <dd><a href="{% url "speeches_by_agenda" abbr agenda.id %}" >Speeches</a></dd>
+    {% comment %}<dd><a href="{% url "speeches_by_agenda" abbr agenda.id %}" >Speeches</a></dd>{% endcomment %}
 </dl>
 
 <h3>{% trans "Participants" %}</h3>
