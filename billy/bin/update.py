@@ -80,7 +80,7 @@ def _run_scraper(scraper_type, options, metadata):
     }
     scrape['start_time'] = dt.datetime.utcnow()
 
-    if scraper_type in ('bills', 'votes', 'events', 'speeches'):
+    if scraper_type in ('bills', 'votes', 'events', 'speeches', 'agendas'):
         times = options.sessions
         for time in times:
             scraper.validate_session(time, scraper.latest_only)
@@ -100,7 +100,7 @@ def _run_scraper(scraper_type, options, metadata):
 
         # error out if events or votes don't scrape anything
         if not scraper.object_count and scraper_type not in ('events',
-                                                             'votes'):
+                                                    'agendas','votes'):
             raise ScrapeError("%s scraper didn't save any objects" %
                               scraper_type)
 
@@ -137,6 +137,7 @@ def _do_imports(abbrev, args):
     from billy.importers.legislators import import_legislators
     from billy.importers.committees import import_committees
     from billy.importers.events import import_events
+    from billy.importers.agendas import import_agendas
     from billy.importers.speeches import import_speeches
 
     # always import metadata and districts
@@ -226,7 +227,7 @@ def main():
             what.add_argument('--' + arg, action='append_const',
                               dest='chambers', const=arg)
         for arg in ('bills', 'legislators', 'committees',
-                    'votes', 'events', 'speeches'):
+                    'votes', 'events', 'speeches', 'agendas'):
             what.add_argument('--' + arg, action='append_const', dest='types',
                               const=arg)
         for arg in ('scrape', 'import', 'report', 'session-list'):
@@ -354,7 +355,7 @@ def main():
 
             # scraper order matters
             order = ('legislators', 'committees', 'votes', 'bills',
-                     'events', 'speeches')
+                     'agendas', 'events', 'speeches')
             _traceback = None
             try:
                 for stype in order:

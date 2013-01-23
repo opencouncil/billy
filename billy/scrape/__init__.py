@@ -146,7 +146,8 @@ class Scraper(scrapelib.Scraper):
 
     def validate_json(self, obj):
         try:
-            self.validator.validate(obj, self._schema[obj['_type']])
+            #self.validator.validate(obj, self._schema[obj['_type']])
+            pass
         except ValueError as ve:
             self.warning(str(ve))
             if self.strict_validation:

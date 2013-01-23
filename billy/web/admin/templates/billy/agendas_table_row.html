@@ -1,0 +1,7 @@
+{% load billy_utiltags %}
+<tr>
+    <td><a href="{% url admin_agenda agenda|level agenda_id %}">{{agenda_id}}</a></td>
+    <td>{{agenda.when|date:"M d, Y"}}</a></td>
+    <td><a href="{% url object_json 'agendas' agenda_id %}">[json]</a>&nbsp;{{agenda.description}}</td>
+    <td>{{agenda.location}}</td>
+</tr>
