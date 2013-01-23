@@ -57,9 +57,16 @@ urlpatterns = patterns(
 
     url(r'^(?P<abbr>[a-z-]+)/bad_vote_list/$', 'bad_vote_list',
         name='bad_vote_list'),
+
+    # events 
     url(r'^(?P<abbr>[a-z-]+)/events/$', 'events', name='admin_events'),
     url(r'^(?P<abbr>[a-z-]+)/event/(?P<event_id>.*)/$', 'event',
         name='admin_event'),
+
+    # agendas
+    url(r'^(?P<abbr>[a-z-]+)/agendas/$', 'agendas', name='admin_agendas'),
+    url(r'^(?P<abbr>[a-z-]+)/agenda/(?P<agenda_id>.*)/$', 'agenda',
+        name='admin_agenda'),
 
     # missing data
     url(r'^(?P<abbr>[a-z-]+)/other_actions/$', 'other_actions',

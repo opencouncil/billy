@@ -65,6 +65,20 @@ urlpatterns += patterns(
     url(r'^region_selection/$', 'region_selection', name='region_selection'),
 )
 
+# agendas 
+urlpatterns += patterns(
+    'billy.web.public.views.agendas',
+
+    url(r'^(?P<abbr>[a-z-]+)/agendas/$', 'agendas',
+        name='agendas'),
+    #url(r'^(?P<abbr>[a-z-]+)/agendas/rss/$', AgendasFeed(),
+    #    name='agendas_rss'),
+    url(r'^(?P<abbr>[a-z-]+)/agendas/(?P<agenda_id>[\w-]+)/', 'agenda',
+        name='agenda'),
+    url(r'^(?P<abbr>[a-z-]+)/ical/(?P<agenda_id>[\w-]+)/', 'agenda_ical',
+        name='agenda_ical'),
+)
+
 # events
 urlpatterns += patterns(
     'billy.web.public.views.events',

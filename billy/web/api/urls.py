@@ -72,6 +72,8 @@ committee_search_handler = Resource(handlers.CommitteeSearchHandler,
                                     authentication=authorizer)
 events_handler = Resource(handlers.EventsHandler,
                           authentication=authorizer)
+agendas_handler = Resource(handlers.AgendasHandler,
+                          authentication=authorizer)
 subject_list_handler = Resource(handlers.SubjectListHandler,
                                 authentication=authorizer)
 legislator_geo_handler = Resource(handlers.LegislatorGeoHandler,
@@ -103,6 +105,9 @@ urlpatterns = patterns(
 
     url(r'^v1/events/$', events_handler),
     url(r'^v1/events/(?P<id>[A-Z-]+E\d{8})/$', events_handler),
+
+    url(r'^v1/agendas/$', agendas_handler),
+    url(r'^v1/agendas/(?P<id>[A-Z-]+E\d{8})/$', agendas_handler),
 
     url(r'v1/subject_counts/(?P<abbr>[a-zA-Z-]+)/(?P<session>.+)/'
         '(?P<chamber>upper|lower)/', subject_list_handler),

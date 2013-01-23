@@ -301,6 +301,18 @@ class CommitteeSearchHandler(BillyHandler):
         return list(db.committees.find(_filter, committee_fields))
 
 
+class AgendasHandler(BillyHandler):
+    def read(self, request, id=None, agendas=[]):
+        if agendas:
+            return agendas
+        if id:
+            return db.agendas.find_one({'_id': id})
+
+        spec = {}
+        return list(db.events.find(spec, fields=_build_field_list(request)
+                                  ).sort('when', pymongo.ASCENDING).limit(1000)
+                   )
+
 class EventsHandler(BillyHandler):
     def read(self, request, id=None, events=[]):
         if events:
